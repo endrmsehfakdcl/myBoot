@@ -1,4 +1,4 @@
-package com.keduit.shop;
+package com.keduit;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
