@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>파라미터 전달 예제</h1>
+<div>
+    <span th:text="${result}"></span>
+</div>
+<div>
+    <span th:text="${itemDTO}"></span>
+</div>
+
+<script th:inline="javascript">
+    const msg = [[${result}]];
+    const itemDTO = [[${itemDTO}]];
+</script>
+
+</body>
+</html>
