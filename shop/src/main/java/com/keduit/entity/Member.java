@@ -32,7 +32,7 @@ public class Member {
     public static Member createMember(MemberFormDTO memberFormDTO, PasswordEncoder passwordEncoder) {
         Member member = new Member();
         member.setName(memberFormDTO.getName());
-        member.setRole(Role.USER);
+        member.setRole(Role.ADMIN);
         member.setEmail(memberFormDTO.getEmail());
         member.setAddress(memberFormDTO.getAddress());
         String password = passwordEncoder.encode(memberFormDTO.getPassword());
