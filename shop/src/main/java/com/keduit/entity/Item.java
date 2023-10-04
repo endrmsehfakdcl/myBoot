@@ -1,6 +1,7 @@
 package com.keduit.entity;
 
 import com.keduit.constant.ItemSellStatus;
+import com.keduit.dto.ItemFormDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,5 +37,12 @@ public class Item extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus; // 상품 판매 상태
 
+    public void updateItem(ItemFormDTO itemFormDTO) {
+        this.itemNm = itemFormDTO.getItemNm();
+        this.price = itemFormDTO.getPrice();
+        this.stockNumber = itemFormDTO.getStockNumber();
+        this.itemDetail = itemFormDTO.getItemDetail();
+        this.itemSellStatus = itemFormDTO.getItemSellStatus();
+    }
 
 }
