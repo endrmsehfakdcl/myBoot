@@ -96,8 +96,8 @@ public class ItemController {
 
     @GetMapping(value = {"/admin/items", "/admin/items/{page}"})
     public String itemManage(ItemSearchDTO itemSearchDTO,
-                            @PathVariable("page") Optional<Integer> page,
-                            Model model) {
+                             @PathVariable("page") Optional<Integer> page,
+                             Model model) {
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
         Page<Item> items = itemService.getAdminItemPage(itemSearchDTO, pageable);
         model.addAttribute("items", items);
@@ -106,6 +106,15 @@ public class ItemController {
         return "item/itemMng";
     }
 
+    // 상세페이지
+    @GetMapping("/item/{itemId}")
+    public String itemDtl(Model model,
+                          @PathVariable("itemId") Long itemId) {
+        ItemFormDTO itemFormDTO = itemService.getItemDtl(itemId);
+        model.addAttribute("item", itemFormDTO);
+
+        return "item/itemDtl";
+    }
 
 
 }

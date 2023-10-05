@@ -29,8 +29,6 @@ public class Order extends BaseEntity {
     private List<OrderItem> orderItems = new ArrayList<>();
 
 
-    private LocalDateTime orderDate;
-
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
