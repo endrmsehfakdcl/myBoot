@@ -38,7 +38,7 @@ public class MemberTest {
         System.out.println("member1 = " + member1);
         System.out.println("member1.getRegTime() = " + member1.getRegTime());
         System.out.println("member1.getUpdateTime() = " + member1.getUpdateTime());
-        System.out.println("member1.getCreateBy() = " + member1.getCreateBy());
+        System.out.println("member1.getCreateBy() = " + member1.getCreatedBy());
         System.out.println("member1.getModifiedBy() = " + member1.getModifiedBy());
     }
 
