@@ -1,6 +1,7 @@
 package com.keduit.service;
 
 import com.keduit.constant.ItemSellStatus;
+import com.keduit.constant.OrderStatus;
 import com.keduit.dto.OrderDTO;
 import com.keduit.entity.Item;
 import com.keduit.entity.Member;
@@ -72,6 +73,24 @@ public class OrderServiceTests {
         int totalPrice = orderDTO.getCount() * item.getPrice();
 
         Assertions.assertEquals(totalPrice, order.getTotalPrice());
+    }
+
+    @Test
+    @DisplayName("주문 취소 테스트")
+    public void cancelOrderTest() {
+        Item item = saveItem();
+        Member member = saveMember();
+
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setCount(10);
+        orderDTO.setItemId(item.getId());
+
+        Long orderID = orderService.order(orderDTO, member.getEmail());
+        Order order = orderRepository.findById(orderID).orElseThrow(EntityNotFoundException::new);
+        orderService.cancelOrder(orderID);
+
+        Assertions.assertEquals(OrderStatus.CANCEL, order.getOrderStatus());
+        Assertions.assertEquals(100, item.getStockNumber());
     }
 
 }
