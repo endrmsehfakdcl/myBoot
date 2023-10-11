@@ -31,15 +31,6 @@ public class TodoController {
         return ResponseEntity.ok().body(responseDTO);
     }
 
-    @GetMapping("/")
-    public ResponseEntity<?> readTodo(@RequestBody TodoDTO todoDTO){
-        todoService.read(todoDTO.getId());
-        ResponseDTO<TodoEntity> responseDTO = ResponseDTO.<TodoEntity>builder().data(todoService.read(todoDTO.getId())).build();
-
-        return ResponseEntity.ok().body(responseDTO);
-    }
-
-
     @PostMapping
     public ResponseEntity<?> createTodo(@RequestBody TodoDTO todoDTO){
 
@@ -77,7 +68,39 @@ public class TodoController {
 
     @DeleteMapping
     public ResponseEntity<?> deleteTodo(@RequestBody TodoDTO todoDTO){
-        todoService.delete(todoDTO.getId());
-        return ResponseEntity.ok("DeleteMapping " + todoDTO.getId() + " : 삭제 완료");
+        try{
+            String tempUserId = "temporal-User";
+            TodoEntity todoEntity = TodoDTO.todoEntity(todoDTO);
+            todoEntity.setUserId(tempUserId);
+
+            List<TodoEntity> entities = todoService.delete(todoEntity);
+            List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
+            ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().data(dtos).build();
+
+            return ResponseEntity.ok().body(response);
+        } catch (Exception e){
+            String error = e.getMessage();
+            ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().error(error).build();
+            return ResponseEntity.badRequest().body(response);
+        }
     }
+
+
+    @GetMapping
+    public ResponseEntity<?> selectTodo(){
+        try{
+            String tempUserId = "temporal-User";
+
+            List<TodoEntity> entities = todoService.read(tempUserId);
+            List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
+            ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().data(dtos).build();
+
+            return ResponseEntity.ok().body(response);
+        } catch (Exception e){
+            String error = e.getMessage();
+            ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().error(error).build();
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
 }

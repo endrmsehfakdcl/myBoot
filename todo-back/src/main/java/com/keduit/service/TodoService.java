@@ -59,10 +59,17 @@ public class TodoService {
         return read(todoEntity.getUserId());
     }
 
-    public void delete(String id) {
-        final Optional<TodoEntity> deleteEntity = repository.findById(id);
-        TodoEntity todoEntity = deleteEntity.get();
-        repository.delete(todoEntity);
-        log.info("repository.delete : " + todoEntity);
+    public List<TodoEntity> delete(final TodoEntity todoEntity) {
+        validate(todoEntity);
+
+        try{
+            repository.delete(todoEntity);
+        } catch (Exception e) {
+            log.error("delete error : " + todoEntity.getId(), e);
+            throw new RuntimeException("delete error" + todoEntity.getId());
+        }
+
+        return read(todoEntity.getUserId());
     }
+
 }
